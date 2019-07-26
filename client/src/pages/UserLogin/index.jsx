@@ -47,10 +47,11 @@ class UserLogin extends Component {
         console.log('errors', errors);
         return;
       }
-      console.log(values);
+      console.log({ ...values });
+      console.log('props', this.props);
       let { dispatchLogin } = this.props;
       Message.success('登录成功');
-      dispatchLogin(values);
+      dispatchLogin({ username: values.username });
       // props.history.push('/');
     });
   };
@@ -59,7 +60,6 @@ class UserLogin extends Component {
     let { value } = this.state;
     return (
       <div className={styles.formContainer}>
-        {JSON.stringify(value)}
         <h4 className={styles.formTitle}>登 录</h4>
         <IceFormBinderWrapper value={value} onChange={this.formChange} ref={formRef => (form = formRef)}>
           <div className={styles.formItems}>

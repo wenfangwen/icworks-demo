@@ -7,17 +7,12 @@ const initialState = {
 
 export default function user(state = initialState, action) {
   switch (action.type) {
-    case types.USER_INFO:
-      alert(true);
+    case types.USER_LOGIN:
+      window.localStorage.setItem('isLogined', true);
       return Object.assign({}, state, {
         isLogined: true,
-        userInfo: {
-          ...action.palyoad
-        }
+        userInfo: action.payload
       });
-    case types.USER_LOGIN: {
-      return { ...state };
-    }
     case types.USER_LOGOUT:
       return { ...initialState };
       break;
