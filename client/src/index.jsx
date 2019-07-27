@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { HashRouter as Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
@@ -16,7 +17,9 @@ const { store, persistor } = configStore();
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <RootRouter />
+      <Router>
+        <RootRouter />
+      </Router>
     </PersistGate>
   </Provider>,
   ICE_CONTAINER

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Balloon, Icon, Message, Nav } from '@alifd/next';
-
 import IceImg from '@icedesign/img';
 import { headerMenuConfig } from '@/menuConfig';
+import connect from '@/connect/user';
 import Logo from '../Logo';
 import styles from './index.module.scss';
 
@@ -15,11 +15,18 @@ function Header(props) {
   /**
    * 默认重定向到主页
    */
-  const handleClick = (selectedKeys) => {
+  const handleClick = selectedKeys => {
     if (selectedKeys.key !== '/') {
       Message.success('可以使用 Iceworks 按需添加页面');
       history.push('/');
     }
+  };
+
+  const logout = e => {
+    e.preventDefault();
+    console.log(props);
+    let { dispatchLogout } = props;
+    dispatchLogout();
   };
 
   return (
@@ -34,24 +41,22 @@ function Header(props) {
           type="secondary"
           onClick={handleClick}
         >
-          {headerMenuConfig
-            && headerMenuConfig.length > 0
-            && headerMenuConfig.map((nav, index) => {
+          {headerMenuConfig &&
+            headerMenuConfig.length > 0 &&
+            headerMenuConfig.map((nav, index) => {
               if (nav.children && nav.children.length > 0) {
                 return (
                   <Item
                     triggerType="click"
                     key={index}
-                    title={(
+                    title={
                       <span>
-                        {nav.icon ? (
-                          <Icon size="small" type={nav.icon} />
-                        ) : null}
+                        {nav.icon ? <Icon size="small" type={nav.icon} /> : null}
                         <span>{nav.name}</span>
                       </span>
-                    )}
+                    }
                   >
-                    {nav.children.map((item) => {
+                    {nav.children.map(item => {
                       const linkProps = {};
                       if (item.external) {
                         if (item.newWindow) {
@@ -89,9 +94,7 @@ function Header(props) {
                   <Item key={nav.path}>
                     <a {...linkProps}>
                       <span>
-                        {nav.icon ? (
-                          <Icon size="small" type={nav.icon} />
-                        ) : null}
+                        {nav.icon ? <Icon size="small" type={nav.icon} /> : null}
                         {nav.name}
                       </span>
                     </a>
@@ -103,9 +106,7 @@ function Header(props) {
                 <Item key={nav.path}>
                   <Link {...linkProps}>
                     <span>
-                      {nav.icon ? (
-                        <Icon size="small" type={nav.icon} />
-                      ) : null}
+                      {nav.icon ? <Icon size="small" type={nav.icon} /> : null}
                       {nav.name}
                     </span>
                   </Link>
@@ -115,21 +116,16 @@ function Header(props) {
         </Nav>
         <Balloon
           triggerType="hover"
-          trigger={(
+          trigger={
             <div
               className={styles.iceDesignHeaderUserpannel}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                fontSize: 12,
+                fontSize: 12
               }}
             >
-              <IceImg
-                height={40}
-                width={40}
-                src={require('./images/avatar.png')}
-                className={styles.userAvatar}
-              />
+              <IceImg height={40} width={40} src={require('./images/avatar.png')} className={styles.userAvatar} />
               <div className={styles.userProfile}>
                 <span className="user-name" style={{ fontSize: '13px' }}>
                   淘小宝
@@ -137,19 +133,15 @@ function Header(props) {
                 <br />
                 <span className={styles.userDepartment}>技术部</span>
               </div>
-              <Icon
-                type="arrow-down"
-                size="xxs"
-                className={styles.iconDown}
-              />
+              <Icon type="arrow-down" size="xxs" className={styles.iconDown} />
             </div>
-          )}
+          }
           closable={false}
           className={styles.userProfileMenu}
         >
           <ul>
             <li className={styles.userProfileMenuItem}>
-              <Link to="/user/login">
+              <Link to="/user/login" onClick={logout}>
                 <Icon type="compass" size="small" />
                 退出
               </Link>
@@ -161,4 +153,4 @@ function Header(props) {
   );
 }
 
-export default withRouter(Header);
+export default connect(withRouter(Header));

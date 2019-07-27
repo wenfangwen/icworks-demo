@@ -47,7 +47,7 @@ class UserLogin extends Component {
       let { dispatchLogin } = this.props;
       Message.success('登录成功');
       dispatchLogin({ username: values.username });
-      props.history.push('/');
+      this.props.history.push('/');
     });
   };
 

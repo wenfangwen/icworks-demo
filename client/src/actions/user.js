@@ -10,3 +10,11 @@ export const dispatchLogin = payload => ({
     ...payload
   }
 });
+
+/**
+ * 退出登录
+ * @param {*} payload
+ */
+export const dispatchLogout = payload => ({
+  type: USER_LOGOUT
+});
