@@ -37,6 +37,7 @@
     "ice-plugin-moment-locales": "^0.1.0",
     "ice-scripts": "^2.0.0",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^5.10.0",
     "stylelint": "^10.1.0"
   },
   "scripts": {

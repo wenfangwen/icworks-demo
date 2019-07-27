@@ -8,7 +8,6 @@ const initialState = {
 export default function user(state = initialState, action) {
   switch (action.type) {
     case types.USER_LOGIN:
-      window.localStorage.setItem('isLogined', true);
       return Object.assign({}, state, {
         isLogined: true,
         userInfo: action.payload

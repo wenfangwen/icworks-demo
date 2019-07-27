@@ -11,6 +11,7 @@ import {
 } from '@icedesign/form-binder';
 import Icon from '@icedesign/foundation-symbol';
 import styles from './index.module.scss';
+import { userInfo } from 'os';
 
 const { Row, Col } = Grid;
 
@@ -60,6 +61,7 @@ class UserLogin extends Component {
     let { value } = this.state;
     return (
       <div className={styles.formContainer}>
+        {JSON.stringify(this.props.userInfo)}
         <h4 className={styles.formTitle}>登 录</h4>
         <IceFormBinderWrapper value={value} onChange={this.formChange} ref={formRef => (form = formRef)}>
           <div className={styles.formItems}>
