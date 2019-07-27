@@ -1,5 +1,6 @@
 import React, { useState, Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import fetch from 'cross-fetch';
 import { Input, Button, Checkbox, Grid, Message } from '@alifd/next';
 import connect from '@/connect/user';
 import {
@@ -44,15 +45,26 @@ class UserLogin extends Component {
       }
       console.log({ ...values });
       console.log('props', this.props);
-      let { dispatchLogin } = this.props;
-      Message.success('登录成功');
-      dispatchLogin({ username: values.username });
-      this.props.history.push('/');
+      let { dispatchLogin, fetchLogin } = this.props;
+      fetchLogin(values);
+      // fetch('https://api.github.com/users/wenfangwen')
+      //   .then(response => response.json())
+      //   .then(json => {
+      //     console.log('登录结果', json);
+      //     if (json.login === 'wenfangwen') {
+      //       Message.success('登录成功');
+      //       dispatchLogin(json);
+      //       this.props.history.push('/');
+      //     } else {
+      //       Message.error('登录失败');
+      //     }
+      //   });
     });
   };
 
   render() {
     let { value } = this.state;
+    let { isFetching } = this.props;
     return (
       <div className={styles.formContainer}>
         <h4 className={styles.formTitle}>登 录</h4>
@@ -61,7 +73,7 @@ class UserLogin extends Component {
             <Row className={styles.formItem}>
               <Col className={styles.formItemCol}>
                 <Icon type="person" size="small" className={styles.inputIcon} />
-                <IceFormBinder name="username" required message="必填">
+                <IceFormBinder name="username" required message="请输入用户名">
                   <Input className={styles.nextInputSingle} maxLength={20} placeholder="用户名" />
                 </IceFormBinder>
               </Col>
@@ -73,7 +85,7 @@ class UserLogin extends Component {
             <Row className={styles.formItem}>
               <Col className={styles.formItemCol}>
                 <Icon type="lock" size="small" className={styles.inputIcon} />
-                <IceFormBinder name="password" required message="必填">
+                <IceFormBinder name="password" required message="请输入密码">
                   <Input className={styles.nextInputSingle} htmlType="password" placeholder="密码" />
                 </IceFormBinder>
               </Col>
@@ -92,14 +104,14 @@ class UserLogin extends Component {
 
             <Row className={styles.formItem}>
               <Button type="primary" onClick={this.handleSubmit} className={styles.submitBtn}>
-                登 录
+                {isFetching ? '登录中...' : '登 录'}
               </Button>
-              <p className={styles.account}>
+              {/* <p className={styles.account}>
                 <span className={styles.tipsText} style={{ marginRight: '20px' }}>
                   管理员登录：admin/admin
                 </span>
                 <span className={styles.tipsText}>学生登录：user/user</span>
-              </p>
+              </p> */}
             </Row>
 
             <Row className={styles.tips}>
