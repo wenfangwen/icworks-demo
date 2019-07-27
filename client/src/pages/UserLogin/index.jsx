@@ -1,9 +1,7 @@
 import React, { useState, Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { Input, Button, Checkbox, Grid, Message } from '@alifd/next';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as action from '../../actions/user';
+import connect from '@/connect/user';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -11,15 +9,11 @@ import {
 } from '@icedesign/form-binder';
 import Icon from '@icedesign/foundation-symbol';
 import styles from './index.module.scss';
-import { userInfo } from 'os';
 
 const { Row, Col } = Grid;
 
 let form;
-@connect(
-  state => state.user,
-  dispatch => bindActionCreators(action, dispatch)
-)
+@connect
 class UserLogin extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +47,7 @@ class UserLogin extends Component {
       let { dispatchLogin } = this.props;
       Message.success('登录成功');
       dispatchLogin({ username: values.username });
-      // props.history.push('/');
+      props.history.push('/');
     });
   };
 
@@ -61,7 +55,6 @@ class UserLogin extends Component {
     let { value } = this.state;
     return (
       <div className={styles.formContainer}>
-        {JSON.stringify(this.props.userInfo)}
         <h4 className={styles.formTitle}>登 录</h4>
         <IceFormBinderWrapper value={value} onChange={this.formChange} ref={formRef => (form = formRef)}>
           <div className={styles.formItems}>
