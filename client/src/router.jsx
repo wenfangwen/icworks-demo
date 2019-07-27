@@ -2,7 +2,7 @@ import { withRouter, HashRouter as Router, Switch, Route, Redirect } from 'react
 import React, { Component } from 'react';
 import connect from '@/connect/user';
 import path from 'path';
-import routes from '@/routerConfig';
+import routes, { noAuthUrl } from '@/routerConfig';
 const RouteItem = props => {
   const { redirect, path: routePath, component, key } = props;
   if (redirect) {
@@ -10,6 +10,7 @@ const RouteItem = props => {
   }
   return <Route key={key} component={component} path={routePath} />;
 };
+
 @withRouter
 @connect
 class router extends Component {
@@ -22,10 +23,10 @@ class router extends Component {
   checkLogin = function(props) {
     const { isLogined } = props;
     let { pathname } = props.location;
-    if (!isLogined && pathname !== '/user/login') {
+    if (!isLogined && !noAuthUrl.includes(pathname)) {
       return props.history.push('/user/login');
     }
-    if (isLogined && pathname === '/user/login') {
+    if (isLogined && noAuthUrl.includes(pathname)) {
       return props.history.push('/');
     }
   };

@@ -1,4 +1,3 @@
-
 import UserLogin from '@/pages/UserLogin';
 import UserRegister from '@/pages/UserRegister';
 import Dashboard from '@/pages/Dashboard';
@@ -20,20 +19,20 @@ const routerConfig = [
     children: [
       {
         path: '/login',
-        component: UserLogin,
+        component: UserLogin
       },
       {
         path: '/register',
-        component: UserRegister,
+        component: UserRegister
       },
       {
         path: '/',
-        redirect: '/user/login',
+        redirect: '/user/login'
       },
       {
-        component: NotFound,
-      },
-    ],
+        component: NotFound
+      }
+    ]
   },
   {
     path: '/',
@@ -41,41 +40,44 @@ const routerConfig = [
     children: [
       {
         path: '/dashboard',
-        component: Dashboard,
+        component: Dashboard
       },
       {
         path: '/dismantling',
-        component: Dismantling,
+        component: Dismantling
       },
       {
         path: '/allocation',
-        component: Allocation,
+        component: Allocation
       },
       {
         path: '/selfHelp',
-        component: Selfhelp,
+        component: Selfhelp
       },
       {
         path: '/list',
-        component: List,
+        component: List
       },
       {
         path: '/batch',
-        component: Batch,
+        component: Batch
       },
       {
         path: '/new',
-        component: NewCase,
+        component: NewCase
       },
       {
         path: '/',
-        redirect: '/dashboard',
+        redirect: '/dashboard'
       },
       {
-        component: NotFound,
-      },
-    ],
-  },
+        component: NotFound
+      }
+    ]
+  }
 ];
 
 export default routerConfig;
+
+// 不需要登录访问的路由
+export const noAuthUrl = ['/user/login', '/user/register'];
